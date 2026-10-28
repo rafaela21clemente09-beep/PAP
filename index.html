@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parque Inteligente</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skipLink">Saltar para o conteúdo</a>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">P</span>
+      <div>
+        <h1 data-i18n="appTitle">Parque Inteligente</h1>
+        <p class="muted small" data-i18n="appSubtitle">Lugares livres em tempo real</p>
+      </div>
+    </div>
+    <div class="tools">
+      <div class="field">
+        <label for="lang" data-i18n="language">Idioma</label>
+        <select id="lang"></select>
+      </div>
+      <button type="button" id="btn-size" class="tool" aria-pressed="false" data-i18n="textSize">Letra maior</button>
+      <button type="button" id="btn-contrast" class="tool" aria-pressed="false" data-i18n="contrast">Alto contraste</button>
+      <div id="user-box" class="user-box" hidden>
+        <span class="user-name" id="user-name"></span>
+        <button type="button" id="btn-logout" class="tool" data-i18n="signOut">Sair</button>
+      </div>
+      <button type="button" id="btn-login-open" class="tool primary" hidden data-i18n="signIn">Entrar</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <p id="offline" class="banner" role="alert" hidden data-i18n="offline">Sem ligação ao parque. A mostrar os últimos dados.</p>
+
+  <!-- Entrar -->
+  <section id="view-login" class="login" aria-labelledby="h-login" hidden>
+    <div class="login-card">
+      <h2 id="h-login" data-i18n="loginTitle">Entrar na conta</h2>
+      <p class="muted" data-i18n="loginIntro">Entra para gerir o parque. Os condutores podem ver os lugares livres sem conta.</p>
+      <form id="login-form" novalidate>
+        <div class="form-row">
+          <label for="email" data-i18n="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="username" inputmode="email" required>
+        </div>
+        <div class="form-row">
+          <label for="password" data-i18n="password">Palavra-passe</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+        <label class="check small">
+          <input type="checkbox" id="show-pass">
+          <span data-i18n="showPassword">Mostrar palavra-passe</span>
+        </label>
+        <p id="login-error" class="form-error" role="alert" hidden></p>
+        <button type="submit" id="login-submit" class="primary big" data-i18n="signIn">Entrar</button>
+      </form>
+      <button type="button" id="btn-guest" class="link-btn" data-i18n="continueGuest">Continuar sem conta</button>
+      <p id="demo-hint" class="hint small" hidden></p>
+    </div>
+  </section>
+
+  <!-- Aplicação -->
+  <div id="view-app" hidden>
+    <div class="layout">
+      <aside class="side" aria-label="Resumo">
+        <section aria-labelledby="h-entrance" class="entrance">
+          <h2 id="h-entrance" class="sr-only" data-i18n="entranceScreen">Ecrã de entrada</h2>
+          <div class="lcd">
+            <div class="lcd-label" data-i18n="freeSpacesUpper">LUGARES LIVRES</div>
+            <div class="lcd-num"><span id="lcd-free">0</span><span class="lcd-total">/ <span id="lcd-total">0</span></span></div>
+            <div class="lcd-floor" id="lcd-floor"></div>
+          </div>
+        </section>
+
+        <section aria-labelledby="h-summary">
+          <h2 id="h-summary" class="sr-only" data-i18n="summary">Resumo</h2>
+          <div class="cards">
+            <div class="card free"><span class="num" id="n-free">0</span><span data-i18n="free">Livres</span></div>
+            <div class="card occ"><span class="num" id="n-occ">0</span><span data-i18n="occupied">Ocupados</span></div>
+            <div class="card"><span class="num" id="n-total">0</span><span data-i18n="total">Total</span></div>
+          </div>
+        </section>
+
+        <ul class="legend">
+          <li><span class="dot free-dot" aria-hidden="true"></span><span data-i18n="legendFree">Verde: livre</span></li>
+          <li><span class="dot occ-dot" aria-hidden="true"></span><span data-i18n="legendOccupied">Vermelho: ocupada</span></li>
+        </ul>
+
+        <p id="updated" class="muted small" aria-hidden="true"></p>
+      </aside>
+
+      <div class="content">
+        <nav aria-labelledby="h-floors">
+          <h2 id="h-floors" class="sr-only" data-i18n="floors">Pisos</h2>
+          <div id="floor-tabs" class="tabs"></div>
+        </nav>
+
+        <section aria-labelledby="h-plan" class="panel">
+          <div class="panel-head">
+            <h2 id="h-plan" data-i18n="plan">Planta do piso</h2>
+            <div class="seg" role="group" aria-labelledby="h-plan">
+              <button type="button" id="view-plan" aria-pressed="true" data-i18n="viewPlan">Planta</button>
+              <button type="button" id="view-list" aria-pressed="false" data-i18n="viewList">Lista</button>
+            </div>
+          </div>
+          <p id="admin-help" class="admin-help small" hidden data-i18n="adminHelp">Modo administrador: toca numa vaga para mudar o estado.</p>
+          <div id="plan"></div>
+          <div id="list" hidden></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <p id="live" class="sr-only" role="status" aria-live="polite"></p>
+</main>
+
+<footer class="small">
+  <span data-i18n="footer">Projeto PAP – Estacionamento Inteligente</span>
+</footer>
+
+<script src="i18n.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
